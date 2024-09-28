@@ -12,9 +12,7 @@ app.use(express.json());
 app.use(cors());
 
 const PORT = process.env.PORT || 5000;
-app.get("/", (req, res) => {
-  res.send("App is running");
-});
+
 app.use("/movies", movieRoutes);
 app.use("/reviews", reviewRoutes);
 

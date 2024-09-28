@@ -23,9 +23,6 @@ const app = (0, express_1.default)();
 app.use(express_1.default.json());
 app.use((0, cors_1.default)());
 const PORT = process.env.PORT || 5000;
-app.get("/", (req, res) => {
-    res.send("App is running");
-});
 app.use("/movies", movieRoutes_1.default);
 app.use("/reviews", reviewRoutes_1.default);
 const startServer = () => __awaiter(void 0, void 0, void 0, function* () {
