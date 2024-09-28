@@ -12,32 +12,28 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const sequelize_1 = require("sequelize");
-const dotenv_1 = __importDefault(require("dotenv"));
-const relation_1 = require("../models/relation");
-dotenv_1.default.config();
-const sequelize = new sequelize_1.Sequelize(process.env.DATABASE_URL, {
-    dialect: "postgres",
-    logging: false,
-});
-sequelize
-    .authenticate()
-    .then(() => {
-    console.log("Database connection is established successfully");
-})
-    .catch((error) => {
-    console.log("Unable to connect to the database: " + error.message);
-    process.exit(1);
-});
-(0, relation_1.setupModels)(sequelize);
-const syncDatabase = () => __awaiter(void 0, void 0, void 0, function* () {
+exports.getAverageRating = void 0;
+const db_1 = __importDefault(require("../../config/db"));
+const review_1 = __importDefault(require("../../models/review"));
+const getAverageRating = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const movieId = parseInt(req.params.movieId, 10);
     try {
-        yield sequelize.sync();
-        console.log("Database synced successfully");
+        const averageRating = yield review_1.default.findOne({
+            where: { movieId },
+            attributes: [
+                [db_1.default.fn("AVG", db_1.default.col("rating")), "averageRating"],
+            ],
+        });
+        if (averageRating) {
+            res.json({ averageRating: averageRating.get("averageRating") });
+        }
+        else {
+            res.status(404).json({ message: "No reviews found for this movie." });
+        }
     }
     catch (error) {
-        console.error("Error syncing database:", error);
+        console.error("Error fetching average rating:", error);
+        res.status(500).json({ message: "Internal server error" });
     }
 });
-syncDatabase();
-exports.default = sequelize;
+exports.getAverageRating = getAverageRating;
