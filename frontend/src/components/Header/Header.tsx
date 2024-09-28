@@ -7,10 +7,7 @@ const Header: FC = () => {
   return (
     <nav className="p-5 flex justify-between items-center bg-slate-300 w-full">
       <div>
-        <h3
-          className="font-bold cursor-pointer"
-          onClick={() => navigate("/")} // Navigate to home on click
-        >
+        <h3 className="font-bold cursor-pointer" onClick={() => navigate("/")}>
           MOVIECRITIC
         </h3>
       </div>

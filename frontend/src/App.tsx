@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { Routes, Route } from "react-router-dom"; // Import
+import { Routes, Route } from "react-router-dom";
 import Card from "./components/Card/Card";
 import Header from "./components/Header/Header";
 import AddMovie from "./components/AddMovie/AddMovie";

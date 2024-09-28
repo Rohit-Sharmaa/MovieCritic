@@ -15,8 +15,8 @@ interface Review {
 interface Movie {
   id: number;
   name: string;
-  releaseDate: string; // Added if you want to display the release date
-  averageRating: number | null; // You might calculate this based on reviews
+  releaseDate: string;
+  averageRating: number | null;
   Reviews: Review[];
 }
 
@@ -31,14 +31,14 @@ const MovieDetail: FC = () => {
         const response = await axiosInstance.get<Review[]>(
           `/reviews/${movieId}`
         );
-        // Assuming the response returns an array of reviews and you have movie details elsewhere
+
         if (response.data.length > 0) {
           const reviewData = response.data;
           const firstReview = reviewData[0];
           setMovie({
             id: firstReview.movieId,
-            name: "Movie Title Here", // You should replace this with the actual movie title
-            releaseDate: "Release Date Here", // You should replace this with the actual release date
+            name: "Movie Title Here",
+            releaseDate: "Release Date Here",
             averageRating:
               reviewData.reduce((acc, review) => acc + review.rating, 0) /
               reviewData.length,
